@@ -2,10 +2,10 @@ import { FC } from "react";
 import Svg, { Path } from "react-native-svg";
 import { SvgProps } from "./svgProps";
 
-export const MagnifyingGlass: FC<SvgProps> = ({
+export const MagnifyingGlassIcon: FC<SvgProps> = ({
   width = 20,
   height = 20,
-  strokeColor = "currentColor",
+  color = "currentColor",
 }) => (
   <Svg
     fill="none"
@@ -13,7 +13,7 @@ export const MagnifyingGlass: FC<SvgProps> = ({
     height={height}
     viewBox="0 0 24 24"
     strokeWidth={1.5}
-    stroke={strokeColor}
+    stroke={color}
   >
     <Path
       strokeLinecap="round"

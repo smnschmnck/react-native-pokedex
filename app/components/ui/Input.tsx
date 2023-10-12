@@ -12,16 +12,16 @@ export const Input: FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <View style={styles.searchField}>
+    <View style={styles.inputWrapper}>
       {startAdornment}
-      <TextInput {...props} style={styles.searchFieldInput} />
+      <TextInput {...props} style={styles.input} />
       {endAdornment}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  searchField: {
+  inputWrapper: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
   },
-  searchFieldInput: {
+  input: {
     display: "flex",
     flex: 1,
   },
