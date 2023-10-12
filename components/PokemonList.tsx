@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import { StyleSheet, Text, Pressable } from "react-native";
 import { FC } from "react";
 import { Link } from "expo-router";
@@ -33,15 +33,24 @@ export const PokemonList: FC<{ searchQuery: string }> = ({ searchQuery }) => {
   });
 
   return (
-    <FlatList
-      data={pokemon?.filter((p) => {
-        const name = p.name.toLowerCase();
-        const nameQuery = searchQuery.toLowerCase();
+    <View style={{ flex: 1 }}>
+      {pokemon && (
+        <FlatList
+          data={pokemon?.filter((p) => {
+            const name = p.name.toLowerCase();
+            const nameQuery = searchQuery.toLowerCase();
 
-        return name.includes(nameQuery);
-      })}
-      renderItem={({ item }) => <ListEntry pokemon={item} />}
-    />
+            return name.includes(nameQuery);
+          })}
+          renderItem={({ item }) => <ListEntry pokemon={item} />}
+        />
+      )}
+      {!pokemon && (
+        <View style={styles.loadingScreen}>
+          <ActivityIndicator size={"large"} />
+        </View>
+      )}
+    </View>
   );
 };
 
@@ -50,5 +59,11 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     borderBottomColor: "#dedede",
     borderBottomWidth: 1,
+  },
+  loadingScreen: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
