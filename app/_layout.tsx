@@ -3,19 +3,18 @@ import { StyleSheet, View } from "react-native";
 
 const Layout = () => {
   return (
-    <View style={styles.mainLayout}>
-      <Stack screenOptions={{ headerShown: false }} />
-    </View>
+    <Stack
+      screenOptions={{ headerShown: false, contentStyle: styles.mainLayout }}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   mainLayout: {
-    display: "flex",
-    flex: 1,
     paddingTop: 64,
     paddingBottom: 32,
     paddingHorizontal: 32,
+    backgroundColor: "white",
   },
 });
 

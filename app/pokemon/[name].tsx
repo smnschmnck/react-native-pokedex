@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     justifyContent: "space-between",
-    backgroundColor: "white",
   },
   loadingScreen: {
     display: "flex",
