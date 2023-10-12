@@ -1,5 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -26,17 +26,16 @@ type Pokemon = {
 
 const PokemonView = () => {
   const { name } = useLocalSearchParams();
-  const [pokemon, setPokemon] = useState<Pokemon | undefined>();
-  useEffect(() => {
-    const fetchPokemonInfo = async () => {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-      const json = (await res.json()) as Pokemon;
+  const fetchPokemonInfo = async () => {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    const json = (await res.json()) as Pokemon;
+    return json;
+  };
 
-      setPokemon(json);
-    };
-
-    fetchPokemonInfo();
-  }, []);
+  const { data: pokemon } = useQuery({
+    queryKey: [`pokemonInfo/${name}`],
+    queryFn: fetchPokemonInfo,
+  });
 
   return (
     <View style={styles.mainView}>

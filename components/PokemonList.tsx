@@ -1,7 +1,8 @@
 import { FlatList } from "react-native";
 import { StyleSheet, Text, Pressable } from "react-native";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Link } from "expo-router";
+import { useQuery } from "@tanstack/react-query";
 
 type Pokemon = {
   name: string;
@@ -20,21 +21,20 @@ const ListEntry: FC<{ pokemon: Pokemon }> = ({ pokemon }) => (
 );
 
 export const PokemonList: FC<{ searchQuery: string }> = ({ searchQuery }) => {
-  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+  const fetchPokemon = async () => {
+    const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=100");
+    const json = (await res.json()) as PokeApiRes;
+    return json.results;
+  };
 
-  useEffect(() => {
-    const fetchPokemon = async () => {
-      const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=100");
-      const json = (await res.json()) as PokeApiRes;
-      setPokemon(json.results);
-    };
-
-    fetchPokemon();
-  }, []);
+  const { data: pokemon } = useQuery({
+    queryKey: [`pokemonList`],
+    queryFn: fetchPokemon,
+  });
 
   return (
     <FlatList
-      data={pokemon.filter((p) => {
+      data={pokemon?.filter((p) => {
         const name = p.name.toLowerCase();
         const nameQuery = searchQuery.toLowerCase();
 

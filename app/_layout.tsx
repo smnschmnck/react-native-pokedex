@@ -1,11 +1,16 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 
+const queryClient = new QueryClient();
+
 const Layout = () => {
   return (
-    <Stack
-      screenOptions={{ headerShown: false, contentStyle: styles.mainLayout }}
-    />
+    <QueryClientProvider client={queryClient}>
+      <Stack
+        screenOptions={{ headerShown: false, contentStyle: styles.mainLayout }}
+      />
+    </QueryClientProvider>
   );
 };
 
