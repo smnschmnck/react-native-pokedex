@@ -18,6 +18,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     display: "flex",
+    flex: 1,
     gap: 24,
   },
   heading: {

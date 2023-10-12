@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { Dimensions, FlatList, View } from "react-native";
 import { StyleSheet, Text, Pressable } from "react-native";
 import { FC } from "react";
 import { Link } from "expo-router";
