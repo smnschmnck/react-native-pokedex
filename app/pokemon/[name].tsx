@@ -1,13 +1,7 @@
+import { Button } from "@components/ui/Button";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useLocalSearchParams } from "expo-router";
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  ActivityIndicator,
-  Pressable,
-} from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { Text, View, Image, StyleSheet, ActivityIndicator } from "react-native";
 
 type Move = {
   move: {
@@ -58,13 +52,9 @@ const PokemonView = () => {
             width={300}
             source={{ uri: pokemon?.sprites.front_default }}
           />
+          <Button title="Save to collection" fullWidth />
         </View>
       )}
-      <Link style={styles.linkStyle} href={"/"} asChild>
-        <Pressable style={styles.backLink}>
-          <Text>Back</Text>
-        </Pressable>
-      </Link>
     </View>
   );
 };
@@ -72,6 +62,8 @@ const PokemonView = () => {
 const styles = StyleSheet.create({
   pokeView: {
     display: "flex",
+    justifyContent: "space-between",
+    flex: 1,
     alignItems: "center",
   },
   infoText: {
@@ -87,7 +79,7 @@ const styles = StyleSheet.create({
   },
   nameHeading: {
     fontSize: 32,
-    fontWeight: "bold",
+    fontWeight: "500",
     textTransform: "capitalize",
   },
   mainView: {
