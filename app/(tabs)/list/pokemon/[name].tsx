@@ -3,6 +3,7 @@ import { Button } from "@components/ui/Button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getSavedPokemonList, savePokemonToList } from "@utils/pokemonStore";
 import { useLocalSearchParams } from "expo-router";
+import { useRefreshOnFocus } from "hooks/useRefreshOnFocus";
 import { Text, View, Image, StyleSheet, ActivityIndicator } from "react-native";
 
 type Move = {
@@ -36,6 +37,8 @@ const PokemonView = () => {
     queryKey: [`pokemonInfo/${name}`],
     queryFn: fetchPokemonInfo,
   });
+
+  useRefreshOnFocus(refetchPokemonInfo);
 
   const savePokemonMutation = useMutation({
     mutationFn: () => savePokemonToList(String(name)),

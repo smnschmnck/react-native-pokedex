@@ -34,3 +34,16 @@ export const savePokemonToList = async (name: string) => {
     JSON.stringify(savedPokemonList)
   );
 };
+
+export const deletePokemonFromList = async (name: string) => {
+  const savedPokemonList = await getSavedPokemonList();
+  if (!savedPokemonList.includes(name)) {
+    return;
+  }
+
+  const newList = savedPokemonList.filter((p) => p !== name);
+  await AsyncStorage.setItem(
+    asyncStorageKeys.savedPokemon,
+    JSON.stringify(newList)
+  );
+};

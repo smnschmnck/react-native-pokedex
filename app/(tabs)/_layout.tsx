@@ -15,16 +15,16 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="list"
           options={{
-            tabBarLabel: "Pokemon",
-            title: "Pokemon",
+            tabBarLabel: "All Pokemon",
+            title: "All Pokemon",
             tabBarIcon: ClearIcon,
           }}
         />
         <Tabs.Screen
           name="savedPokemon"
           options={{
-            tabBarLabel: "Saved Pokemon",
-            title: "Saved Pokemon",
+            tabBarLabel: "Collection",
+            title: "Collection",
             tabBarIcon: ClearIcon,
           }}
         />

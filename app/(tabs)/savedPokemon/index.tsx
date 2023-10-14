@@ -1,12 +1,18 @@
 import { Button } from "@components/ui/Button";
 import { useQuery } from "@tanstack/react-query";
-import { getSavedPokemonList } from "@utils/pokemonStore";
+import {
+  deletePokemonFromList,
+  getSavedPokemonList,
+} from "@utils/pokemonStore";
 import { capitalizeString } from "@utils/stringFormatters";
 import { useRefreshOnFocus } from "hooks/useRefreshOnFocus";
 import { FC } from "react";
 import { FlatList, Text, View, StyleSheet, Alert } from "react-native";
 
-const ListEntry: FC<{ name: string }> = ({ name }) => {
+const ListEntry: FC<{ name: string; refetch: () => Promise<any> }> = ({
+  name,
+  refetch,
+}) => {
   const triggerDeleteDialog = () => {
     const capitalizedName = capitalizeString(name);
     Alert.alert(
@@ -20,6 +26,10 @@ const ListEntry: FC<{ name: string }> = ({ name }) => {
         {
           text: "Delete",
           style: "destructive",
+          onPress: async () => {
+            await deletePokemonFromList(name);
+            await refetch();
+          },
         },
       ]
     );
@@ -45,14 +55,13 @@ const SavedPokemon = () => {
     queryKey: ["savedPokemon"],
     queryFn: getSavedPokemonList,
   });
-
   useRefreshOnFocus(refetch);
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.heading}>Saved Pokemon</Text>
       <FlatList
         data={savedPokemonList}
-        renderItem={({ item }) => <ListEntry name={item} />}
+        renderItem={({ item }) => <ListEntry name={item} refetch={refetch} />}
       />
     </View>
   );
