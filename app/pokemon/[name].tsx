@@ -1,8 +1,9 @@
 import { BackButton } from "@components/ui/BackButton";
 import { Button } from "@components/ui/Button";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { Text, View, Image, StyleSheet, ActivityIndicator } from "react-native";
+import { getSavedPokemonList, savePokemonToList } from "./pokemonStore";
 
 type Move = {
   move: {
@@ -24,12 +25,21 @@ const PokemonView = () => {
   const fetchPokemonInfo = async () => {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const json = (await res.json()) as Pokemon;
-    return json;
+    const savedPokemonList = await getSavedPokemonList();
+    return {
+      ...json,
+      isSaved: savedPokemonList.includes(String(name)),
+    };
   };
 
-  const { data: pokemon } = useQuery({
+  const { data: pokemon, refetch: refetchPokemonInfo } = useQuery({
     queryKey: [`pokemonInfo/${name}`],
     queryFn: fetchPokemonInfo,
+  });
+
+  const savePokemonMutation = useMutation({
+    mutationFn: () => savePokemonToList(String(name)),
+    onSuccess: () => refetchPokemonInfo(),
   });
 
   return (
@@ -59,7 +69,13 @@ const PokemonView = () => {
             width={300}
             source={{ uri: pokemon?.sprites.front_default }}
           />
-          <Button title="Save to collection" fullWidth />
+          <Button
+            onPress={() => savePokemonMutation.mutate()}
+            isLoading={savePokemonMutation.isLoading}
+            disabled={pokemon.isSaved}
+            title={pokemon.isSaved ? "Saved" : "Save to collection"}
+            fullWidth
+          />
         </View>
       )}
     </View>

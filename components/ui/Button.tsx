@@ -20,12 +20,11 @@ export const Button: FC<ButtonProps> = ({
   fullWidth,
   variant = "primary",
   isLoading,
+  disabled,
   ...props
 }) => {
   const buttonVariant = `${variant}Button` as const;
   const buttonTextVariant = `${variant}ButtonText` as const;
-
-  type x = ActivityIndicatorProps;
 
   return (
     <Pressable
@@ -34,9 +33,9 @@ export const Button: FC<ButtonProps> = ({
         ...styles.buttonBase,
         ...styles[buttonVariant],
         alignSelf: fullWidth ? "stretch" : "auto",
-        opacity: pressed || isLoading ? 0.75 : 1,
+        opacity: pressed || isLoading || disabled ? 0.5 : 1,
       })}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       {!isLoading && (
         <Text
