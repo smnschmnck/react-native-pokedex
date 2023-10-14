@@ -13,7 +13,11 @@ type PokeApiRes = {
 };
 
 const ListEntry: FC<{ pokemon: Pokemon }> = ({ pokemon }) => (
-  <Link href={`/pokemon/${pokemon.name}`} key={pokemon.name} asChild>
+  <Link
+    href={`/(tabs)/list/pokemon/${pokemon.name}`}
+    key={pokemon.name}
+    asChild
+  >
     <Pressable style={styles.listEntry}>
       <Text>{pokemon.name}</Text>
     </Pressable>
