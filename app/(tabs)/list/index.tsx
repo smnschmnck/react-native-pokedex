@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text } from "react-native";
 import { useState } from "react";
 import { SearchInput } from "@components/ui/SearchInput";
-import { PokemonList } from "@components/PokemonList";
+import { PokemonList } from "./PokemonList";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");

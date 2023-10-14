@@ -1,9 +1,9 @@
 import { BackButton } from "@components/ui/BackButton";
 import { Button } from "@components/ui/Button";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { getSavedPokemonList, savePokemonToList } from "@utils/pokemonStore";
 import { useLocalSearchParams } from "expo-router";
 import { Text, View, Image, StyleSheet, ActivityIndicator } from "react-native";
-import { getSavedPokemonList, savePokemonToList } from "./pokemonStore";
 
 type Move = {
   move: {

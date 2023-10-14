@@ -12,8 +12,7 @@ const Layout = () => {
 const styles = StyleSheet.create({
   mainLayout: {
     flex: 1,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    padding: 32,
     backgroundColor: "white",
   },
 });
