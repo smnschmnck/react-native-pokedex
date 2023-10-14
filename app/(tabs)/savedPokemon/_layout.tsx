@@ -1,11 +1,14 @@
-import { Slot } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { Stack } from "expo-router";
+import { StyleSheet } from "react-native";
 
 const Layout = () => {
   return (
-    <View style={styles.mainLayout}>
-      <Slot />
-    </View>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: styles.mainLayout,
+      }}
+    />
   );
 };
 

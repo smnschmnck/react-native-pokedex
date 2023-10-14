@@ -5,9 +5,17 @@ import {
   getSavedPokemonList,
 } from "@utils/pokemonStore";
 import { capitalizeString } from "@utils/stringFormatters";
+import { Link } from "expo-router";
 import { useRefreshOnFocus } from "hooks/useRefreshOnFocus";
 import { FC } from "react";
-import { FlatList, Text, View, StyleSheet, Alert } from "react-native";
+import {
+  FlatList,
+  Text,
+  View,
+  StyleSheet,
+  Alert,
+  Pressable,
+} from "react-native";
 
 const ListEntry: FC<{ name: string; refetch: () => Promise<any> }> = ({
   name,
@@ -36,17 +44,19 @@ const ListEntry: FC<{ name: string; refetch: () => Promise<any> }> = ({
   };
 
   return (
-    <View style={styles.listEntry}>
-      <Text style={styles.pokemonName}>{name}</Text>
-      <View>
-        <Button
-          onPress={triggerDeleteDialog}
-          title="Delete"
-          variant="ghost"
-          destructive
-        />
-      </View>
-    </View>
+    <Link href={`/(tabs)/savedPokemon/pokemon/${name}`} key={name} asChild>
+      <Pressable style={styles.listEntry}>
+        <Text style={styles.pokemonName}>{name}</Text>
+        <View>
+          <Button
+            onPress={triggerDeleteDialog}
+            title="Delete"
+            variant="ghost"
+            destructive
+          />
+        </View>
+      </Pressable>
+    </Link>
   );
 };
 
