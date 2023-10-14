@@ -17,7 +17,7 @@ const ListEntry: FC<{ name: string; refetch: () => Promise<any> }> = ({
     const capitalizedName = capitalizeString(name);
     Alert.alert(
       `Delete ${capitalizedName}?`,
-      `Do you really want to delete ${capitalizedName}?`,
+      `Do you really want to delete ${capitalizedName} from your collection?`,
       [
         {
           text: "Cancel",
