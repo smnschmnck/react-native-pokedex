@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ClearIcon } from "@icons/ClearIcon";
 const queryClient = new QueryClient();
 
 export default function TabsLayout() {
@@ -8,6 +9,7 @@ export default function TabsLayout() {
       <Tabs
         screenOptions={{
           headerShown: false,
+          tabBarActiveTintColor: "#06f",
         }}
       >
         <Tabs.Screen
@@ -15,6 +17,7 @@ export default function TabsLayout() {
           options={{
             tabBarLabel: "Pokemon",
             title: "Pokemon",
+            tabBarIcon: ClearIcon,
           }}
         />
         <Tabs.Screen
@@ -22,6 +25,7 @@ export default function TabsLayout() {
           options={{
             tabBarLabel: "Saved Pokemon",
             title: "Saved Pokemon",
+            tabBarIcon: ClearIcon,
           }}
         />
       </Tabs>

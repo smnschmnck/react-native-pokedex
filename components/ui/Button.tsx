@@ -1,7 +1,6 @@
 import { FC } from "react";
 import {
   ActivityIndicator,
-  ActivityIndicatorProps,
   Pressable,
   PressableProps,
   StyleSheet,
@@ -12,6 +11,7 @@ type ButtonProps = PressableProps & {
   title: string;
   fullWidth?: boolean;
   variant?: "primary" | "secondary" | "ghost";
+  destructive?: boolean;
   isLoading?: boolean;
 };
 
@@ -21,6 +21,7 @@ export const Button: FC<ButtonProps> = ({
   variant = "primary",
   isLoading,
   disabled,
+  destructive,
   ...props
 }) => {
   const buttonVariant = `${variant}Button` as const;
@@ -34,6 +35,10 @@ export const Button: FC<ButtonProps> = ({
         ...styles[buttonVariant],
         alignSelf: fullWidth ? "stretch" : "auto",
         opacity: pressed || isLoading || disabled ? 0.5 : 1,
+        backgroundColor:
+          destructive && variant === "primary"
+            ? "#ff0000"
+            : styles[buttonVariant].backgroundColor,
       })}
       disabled={isLoading || disabled}
     >
@@ -42,6 +47,10 @@ export const Button: FC<ButtonProps> = ({
           style={{
             ...styles.buttonTextBase,
             ...styles[buttonTextVariant],
+            color:
+              destructive && variant !== "primary"
+                ? "#ff0000"
+                : styles[buttonTextVariant].color,
           }}
         >
           {title}

@@ -19,8 +19,6 @@ export const getSavedPokemonList = async () => {
     savedPokemonListRes ?? ""
   )) as SavedPokemonList;
 
-  console.log(savedPokemonList);
-
   return savedPokemonList;
 };
 

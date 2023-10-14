@@ -19,7 +19,7 @@ const ListEntry: FC<{ pokemon: Pokemon }> = ({ pokemon }) => (
     asChild
   >
     <Pressable style={styles.listEntry}>
-      <Text>{pokemon.name}</Text>
+      <Text style={styles.pokemonName}>{pokemon.name}</Text>
     </Pressable>
   </Link>
 );
@@ -60,9 +60,13 @@ export const PokemonList: FC<{ searchQuery: string }> = ({ searchQuery }) => {
 
 const styles = StyleSheet.create({
   listEntry: {
-    paddingVertical: 24,
+    height: 64,
+    justifyContent: "center",
     borderBottomColor: "#dedede",
     borderBottomWidth: 1,
+  },
+  pokemonName: {
+    textTransform: "capitalize",
   },
   loadingScreen: {
     flex: 1,

@@ -1,21 +1,83 @@
+import { Button } from "@components/ui/Button";
 import { useQuery } from "@tanstack/react-query";
 import { getSavedPokemonList } from "@utils/pokemonStore";
-import { FlatList, Text, View } from "react-native";
+import { capitalizeString } from "@utils/stringFormatters";
+import { useRefreshOnFocus } from "hooks/useRefreshOnFocus";
+import { FC } from "react";
+import { FlatList, Text, View, StyleSheet, Alert } from "react-native";
+
+const ListEntry: FC<{ name: string }> = ({ name }) => {
+  const triggerDeleteDialog = () => {
+    const capitalizedName = capitalizeString(name);
+    Alert.alert(
+      `Delete ${capitalizedName}?`,
+      `Do you really want to delete ${capitalizedName}?`,
+      [
+        {
+          text: "Cancel",
+          isPreferred: true,
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+        },
+      ]
+    );
+  };
+
+  return (
+    <View style={styles.listEntry}>
+      <Text style={styles.pokemonName}>{name}</Text>
+      <View>
+        <Button
+          onPress={triggerDeleteDialog}
+          title="Delete"
+          variant="ghost"
+          destructive
+        />
+      </View>
+    </View>
+  );
+};
 
 const SavedPokemon = () => {
-  const { data: savedPokemonList } = useQuery({
+  const { data: savedPokemonList, refetch } = useQuery({
     queryKey: ["savedPokemon"],
     queryFn: getSavedPokemonList,
   });
+
+  useRefreshOnFocus(refetch);
   return (
-    <View>
-      <Text>List</Text>
+    <View style={styles.mainContainer}>
+      <Text style={styles.heading}>Saved Pokemon</Text>
       <FlatList
         data={savedPokemonList}
-        renderItem={({ item }) => <Text>{item}</Text>}
+        renderItem={({ item }) => <ListEntry name={item} />}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    gap: 24,
+  },
+  pokemonName: {
+    textTransform: "capitalize",
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: "500",
+  },
+  listEntry: {
+    height: 64,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomColor: "#dedede",
+    borderBottomWidth: 1,
+  },
+});
 
 export default SavedPokemon;
