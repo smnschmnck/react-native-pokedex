@@ -17,13 +17,12 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    display: "flex",
     flex: 1,
     gap: 24,
   },
   heading: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
 });
 

@@ -1,3 +1,4 @@
+import { BackButton } from "@components/ui/BackButton";
 import { Button } from "@components/ui/Button";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
@@ -33,6 +34,13 @@ const PokemonView = () => {
 
   return (
     <View style={styles.mainView}>
+      <View style={styles.header}>
+        <View style={styles.headerSpacerView}>
+          <BackButton />
+        </View>
+        <Text style={styles.nameHeading}>{name}</Text>
+        <View style={styles.headerSpacerView} />
+      </View>
       {!pokemon && (
         <View style={styles.loadingScreen}>
           <ActivityIndicator size={"large"} />
@@ -41,7 +49,6 @@ const PokemonView = () => {
       {!!pokemon && (
         <View style={styles.pokeView}>
           <View style={styles.infoView}>
-            <Text style={styles.nameHeading}>{name}</Text>
             <View style={styles.stats}>
               <Text style={styles.infoText}>Height: {pokemon?.height}</Text>
               <Text style={styles.infoText}>Weight: {pokemon?.weight}</Text>
@@ -60,35 +67,38 @@ const PokemonView = () => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  headerSpacerView: {
+    flex: 1,
+  },
   pokeView: {
-    display: "flex",
     justifyContent: "space-between",
     flex: 1,
+    paddingTop: 32,
     alignItems: "center",
   },
   infoText: {
     fontSize: 16,
   },
   infoView: {
-    display: "flex",
     gap: 8,
     alignSelf: "stretch",
   },
-  stats: {
-    display: "flex",
-  },
+  stats: {},
   nameHeading: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: "500",
     textTransform: "capitalize",
   },
   mainView: {
-    display: "flex",
     flex: 1,
     justifyContent: "space-between",
   },
   loadingScreen: {
-    display: "flex",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -97,7 +107,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   backLink: {
-    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,

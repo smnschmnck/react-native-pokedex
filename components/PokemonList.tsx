@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   loadingScreen: {
-    display: "flex",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

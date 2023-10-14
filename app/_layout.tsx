@@ -9,7 +9,6 @@ const Layout = () => {
   const insets = useSafeAreaInsets();
   const styles = StyleSheet.create({
     mainLayout: {
-      display: "flex",
       flex: 1,
       paddingTop: insets.top + 16,
       paddingBottom: insets.bottom + 16,

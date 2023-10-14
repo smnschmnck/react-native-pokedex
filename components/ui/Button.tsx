@@ -59,7 +59,6 @@ export const Button: FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   buttonBase: {
-    display: "flex",
     paddingHorizontal: 16,
     justifyContent: "center",
     alignItems: "center",

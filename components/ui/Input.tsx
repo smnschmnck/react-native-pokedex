@@ -22,7 +22,6 @@ export const Input: FC<InputProps> = ({
 
 const styles = StyleSheet.create({
   inputWrapper: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
@@ -32,7 +31,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   input: {
-    display: "flex",
     flex: 1,
   },
 });
