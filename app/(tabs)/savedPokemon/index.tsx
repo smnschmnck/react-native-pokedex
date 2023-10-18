@@ -1,5 +1,5 @@
 import { Button } from "@components/ui/Button";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   deletePokemonFromList,
   getSavedPokemonList,
@@ -18,11 +18,20 @@ import {
   ActivityIndicator,
 } from "react-native";
 
-const ListEntry: FC<{ name: string; refetch: () => Promise<any> }> = ({
-  name,
-  refetch,
-}) => {
+const ListEntry: FC<{ name: string }> = ({ name }) => {
   const queryClient = useQueryClient();
+  const deletePokemonMutation = useMutation({
+    mutationFn: () => deletePokemonFromList(name),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({
+        queryKey: ["savedPokemon"],
+      });
+      await queryClient.refetchQueries({
+        queryKey: [`pokemonInfo/${name}`],
+      });
+    },
+  });
+
   const triggerDeleteDialog = () => {
     const capitalizedName = capitalizeString(name);
     Alert.alert(
@@ -36,9 +45,8 @@ const ListEntry: FC<{ name: string; refetch: () => Promise<any> }> = ({
         {
           text: "Delete",
           style: "destructive",
-          onPress: async () => {
-            await deletePokemonFromList(name, queryClient);
-            await refetch();
+          onPress: () => {
+            deletePokemonMutation.mutate();
           },
         },
       ]
@@ -76,9 +84,7 @@ const SavedPokemon = () => {
           {savedPokemonList.length >= 1 && (
             <FlatList
               data={savedPokemonList}
-              renderItem={({ item }) => (
-                <ListEntry name={item} refetch={refetch} />
-              )}
+              renderItem={({ item }) => <ListEntry name={item} />}
             />
           )}
           {savedPokemonList.length <= 0 && (

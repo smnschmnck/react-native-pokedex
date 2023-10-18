@@ -36,10 +36,7 @@ export const savePokemonToList = async (name: string) => {
   );
 };
 
-export const deletePokemonFromList = async (
-  name: string,
-  queryClient: QueryClient
-) => {
+export const deletePokemonFromList = async (name: string) => {
   const savedPokemonList = await getSavedPokemonList();
   if (!savedPokemonList.includes(name)) {
     return;
@@ -50,8 +47,4 @@ export const deletePokemonFromList = async (
     asyncStorageKeys.savedPokemon,
     JSON.stringify(newList)
   );
-
-  queryClient.refetchQueries({
-    queryKey: [`pokemonInfo/${name}`],
-  });
 };
