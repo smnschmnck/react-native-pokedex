@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ClearIcon } from "@icons/ClearIcon";
+import { ListIcon } from "@icons/ListIcon";
+import { ArchiveIcon } from "@icons/ArchiveIcon";
 const queryClient = new QueryClient();
 
 export default function TabsLayout() {
@@ -17,7 +18,7 @@ export default function TabsLayout() {
           options={{
             tabBarLabel: "All Pokemon",
             title: "All Pokemon",
-            tabBarIcon: ClearIcon,
+            tabBarIcon: ListIcon,
           }}
         />
         <Tabs.Screen
@@ -25,7 +26,7 @@ export default function TabsLayout() {
           options={{
             tabBarLabel: "Collection",
             title: "Collection",
-            tabBarIcon: ClearIcon,
+            tabBarIcon: ArchiveIcon,
           }}
         />
       </Tabs>
