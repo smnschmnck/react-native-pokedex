@@ -1,6 +1,6 @@
 import { BackButton } from "@components/ui/BackButton";
 import { Button } from "@components/ui/Button";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSavedPokemonList, savePokemonToList } from "@utils/pokemonStore";
 import { useLocalSearchParams } from "expo-router";
 import { useRefreshOnFocus } from "hooks/useRefreshOnFocus";
@@ -23,6 +23,7 @@ type Pokemon = {
 
 const PokemonView = () => {
   const { name } = useLocalSearchParams();
+  const queryClient = useQueryClient();
   const fetchPokemonInfo = async () => {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const json = (await res.json()) as Pokemon;
@@ -42,7 +43,12 @@ const PokemonView = () => {
 
   const savePokemonMutation = useMutation({
     mutationFn: () => savePokemonToList(String(name)),
-    onSuccess: () => refetchPokemonInfo(),
+    onSuccess: async () => {
+      await refetchPokemonInfo();
+      await queryClient.refetchQueries({
+        queryKey: ["savedPokemon"],
+      });
+    },
   });
 
   return (
