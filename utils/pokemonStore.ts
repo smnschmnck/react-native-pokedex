@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { QueryClient } from "@tanstack/react-query";
 import { asyncStorageKeys } from "constants/AsyncStorageKeys";
 import { SavedPokemonList } from "types/asyncStorage";
 
@@ -35,7 +36,10 @@ export const savePokemonToList = async (name: string) => {
   );
 };
 
-export const deletePokemonFromList = async (name: string) => {
+export const deletePokemonFromList = async (
+  name: string,
+  queryClient: QueryClient
+) => {
   const savedPokemonList = await getSavedPokemonList();
   if (!savedPokemonList.includes(name)) {
     return;
@@ -46,4 +50,8 @@ export const deletePokemonFromList = async (name: string) => {
     asyncStorageKeys.savedPokemon,
     JSON.stringify(newList)
   );
+
+  queryClient.refetchQueries({
+    queryKey: [`pokemonInfo/${name}`],
+  });
 };

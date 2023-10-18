@@ -6,6 +6,8 @@ import { useLocalSearchParams } from "expo-router";
 import { useRefreshOnFocus } from "hooks/useRefreshOnFocus";
 import { Text, View, Image, StyleSheet, ActivityIndicator } from "react-native";
 
+//TODO USE ALREADY DEFINED COMPONENT INSTEAD OF COPY PASTING!!!!!!!!!!!!!!!!!!!!!!!
+
 type Move = {
   move: {
     name: string;
@@ -40,11 +42,6 @@ const PokemonView = () => {
 
   useRefreshOnFocus(refetchPokemonInfo);
 
-  const savePokemonMutation = useMutation({
-    mutationFn: () => savePokemonToList(String(name)),
-    onSuccess: () => refetchPokemonInfo(),
-  });
-
   return (
     <View style={styles.mainView}>
       <View style={styles.header}>
@@ -71,13 +68,6 @@ const PokemonView = () => {
             height={300}
             width={300}
             source={{ uri: pokemon?.sprites.front_default }}
-          />
-          <Button
-            onPress={() => savePokemonMutation.mutate()}
-            isLoading={savePokemonMutation.isLoading}
-            disabled={pokemon.isSaved}
-            title={pokemon.isSaved ? "Saved" : "Save to collection"}
-            fullWidth
           />
         </View>
       )}

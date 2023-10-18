@@ -1,5 +1,5 @@
 import { Button } from "@components/ui/Button";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   deletePokemonFromList,
   getSavedPokemonList,
@@ -15,12 +15,14 @@ import {
   StyleSheet,
   Alert,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 
 const ListEntry: FC<{ name: string; refetch: () => Promise<any> }> = ({
   name,
   refetch,
 }) => {
+  const queryClient = useQueryClient();
   const triggerDeleteDialog = () => {
     const capitalizedName = capitalizeString(name);
     Alert.alert(
@@ -35,7 +37,7 @@ const ListEntry: FC<{ name: string; refetch: () => Promise<any> }> = ({
           text: "Delete",
           style: "destructive",
           onPress: async () => {
-            await deletePokemonFromList(name);
+            await deletePokemonFromList(name, queryClient);
             await refetch();
           },
         },
@@ -69,10 +71,28 @@ const SavedPokemon = () => {
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.heading}>Saved Pokemon</Text>
-      <FlatList
-        data={savedPokemonList}
-        renderItem={({ item }) => <ListEntry name={item} refetch={refetch} />}
-      />
+      {savedPokemonList && (
+        <>
+          {savedPokemonList.length >= 1 && (
+            <FlatList
+              data={savedPokemonList}
+              renderItem={({ item }) => (
+                <ListEntry name={item} refetch={refetch} />
+              )}
+            />
+          )}
+          {savedPokemonList.length <= 0 && (
+            <View style={styles.noPokemonContainer}>
+              <Text>No saved Pokemon</Text>
+            </View>
+          )}
+        </>
+      )}
+      {!savedPokemonList && (
+        <View style={styles.noPokemonContainer}>
+          <ActivityIndicator size="large" />
+        </View>
+      )}
     </View>
   );
 };
@@ -81,6 +101,11 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     gap: 24,
+  },
+  noPokemonContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   pokemonName: {
     textTransform: "capitalize",
